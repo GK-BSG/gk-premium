@@ -10,456 +10,151 @@
 
 <style>
 
-/* ===== RESET ===== */
+/* ================= RESET ================= */
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   font-family:'Inter',sans-serif;
-
   background:
   radial-gradient(circle at top left, rgba(255,0,0,0.18), transparent 35%),
   radial-gradient(circle at bottom right, rgba(120,0,0,0.22), transparent 40%),
   #050505;
-
   color:white;
   overflow-x:hidden;
 }
 
-/* ===== INTRO ===== */
+/* ================= INTRO ================= */
 .intro-screen{
   position:fixed;
   inset:0;
-
   background:#050505;
-
   display:flex;
-  align-items:center;
-  justify-content:center;
   flex-direction:column;
-
-  z-index:99999;
-
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
   animation:introFade 3.5s forwards;
 }
 
 .intro-logo{
   font-family:'Orbitron',sans-serif;
-
   font-size:120px;
   font-weight:900;
-
   color:#ff2b2b;
-
-  text-shadow:
-  0 0 25px rgba(255,0,0,0.45);
-
-  animation:logoPulse 2s infinite alternate;
+  text-shadow:0 0 25px rgba(255,0,0,0.45);
+  animation:pulse 2s infinite alternate;
 }
 
 .intro-text{
-  margin-top:18px;
-
-  color:rgba(255,255,255,0.65);
-
+  margin-top:15px;
   letter-spacing:5px;
-
-  text-transform:uppercase;
-
-  font-size:13px;
+  opacity:0.7;
 }
 
-@keyframes logoPulse{
-
-  from{
-    transform:scale(0.92);
-    opacity:0.75;
-  }
-
-  to{
-    transform:scale(1.05);
-    opacity:1;
-  }
-
+@keyframes pulse{
+  from{transform:scale(0.95);}
+  to{transform:scale(1.05);}
 }
 
 @keyframes introFade{
-
-  0%{
-    opacity:1;
-    visibility:visible;
-  }
-
-  80%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:0;
-    visibility:hidden;
-  }
-
+  0%{opacity:1;}
+  80%{opacity:1;}
+  100%{opacity:0;visibility:hidden;}
 }
 
-/* ===== PARTICLES ===== */
-.particles{
-  position:fixed;
-  inset:0;
-
-  overflow:hidden;
-
-  pointer-events:none;
-}
-
-.particle{
-  position:absolute;
-
-  width:4px;
-  height:4px;
-
-  background:#ff2a2a;
-
-  border-radius:50%;
-
-  animation:float linear infinite;
-}
-
-@keyframes float{
-
-  from{
-    transform:translateY(100vh);
-    opacity:0;
-  }
-
-  20%{
-    opacity:1;
-  }
-
-  to{
-    transform:translateY(-100px);
-    opacity:0;
-  }
-
-}
-
-/* ===== WRAPPER ===== */
+/* ================= LAYOUT ================= */
 .wrapper{
-  width:100%;
   max-width:1200px;
-
   margin:auto;
-
-  padding:120px 20px 80px;
+  padding:120px 20px;
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero{
-  background:rgba(10,10,10,0.78);
-
-  border:1px solid rgba(255,0,0,0.12);
-
-  box-shadow:
-  0 0 40px rgba(255,0,0,0.12);
-
-  border-radius:32px;
-
+  background:rgba(10,10,10,0.75);
+  border:1px solid rgba(255,0,0,0.15);
+  border-radius:30px;
   padding:40px;
-
-  position:relative;
-
-  overflow:hidden;
-
-  backdrop-filter:blur(18px);
-}
-
-.hero::before{
-  content:'';
-
-  position:absolute;
-  inset:0;
-
-  background:linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.03),
-    transparent
-  );
-
-  animation:shine 6s linear infinite;
-}
-
-@keyframes shine{
-
-  from{
-    transform:translateX(-100%);
-  }
-
-  to{
-    transform:translateX(100%);
-  }
-
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-
-  padding:10px 16px;
-
-  border-radius:999px;
-
-  background:rgba(255,0,0,0.12);
-
-  border:1px solid rgba(255,0,0,0.18);
-
-  margin-bottom:24px;
-
-  font-size:13px;
+  backdrop-filter:blur(15px);
 }
 
 .hero h1{
-  font-family:'Orbitron',sans-serif;
-
-  font-size:72px;
-
-  line-height:1;
-
-  margin-bottom:20px;
+  font-family:'Orbitron';
+  font-size:70px;
 }
 
 .highlight{
-  color:#ff3939;
-
-  text-shadow:
-  0 0 20px rgba(255,0,0,0.45);
+  color:#ff2b2b;
 }
 
 .hero p{
-  max-width:760px;
-
-  line-height:1.8;
-
-  color:rgba(255,255,255,0.7);
-
-  margin-bottom:30px;
+  margin-top:15px;
+  opacity:0.7;
+  max-width:700px;
 }
 
-/* ===== LOGIN ===== */
-.login-box{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.login-box input{
-  flex:1;
-
-  min-width:220px;
-
-  background:rgba(255,255,255,0.05);
-
-  border:1px solid rgba(255,255,255,0.08);
-
-  border-radius:18px;
-
-  padding:16px 18px;
-
-  color:white;
-
-  outline:none;
-}
-
+/* BUTTONS */
 button{
+  background:linear-gradient(135deg,#ff2020,#700000);
   border:none;
-
-  border-radius:18px;
-
-  padding:16px 22px;
-
-  cursor:pointer;
-
-  font-weight:700;
-
-  background:linear-gradient(
-    135deg,
-    #ff2020,
-    #700000
-  );
-
+  padding:12px 18px;
+  border-radius:12px;
   color:white;
-
-  transition:0.3s;
+  cursor:pointer;
+  margin:5px;
 }
 
 button:hover{
-  transform:translateY(-3px);
-
-  box-shadow:
-  0 0 22px rgba(255,0,0,0.25);
+  transform:translateY(-2px);
 }
 
-/* ===== VIP ===== */
-#vipContent{
-  display:none;
-
-  margin-top:40px;
+/* LOGIN */
+input{
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin:5px;
 }
 
-/* ===== SECTIONS ===== */
+/* SECTIONS */
 .section{
-  margin-bottom:28px;
-
+  margin-top:25px;
   background:rgba(255,255,255,0.04);
-
-  border:1px solid rgba(255,255,255,0.06);
-
-  border-radius:28px;
-
-  padding:28px;
+  padding:20px;
+  border-radius:20px;
 }
 
-.section-title{
-  font-family:'Orbitron',sans-serif;
-
-  font-size:24px;
-
-  margin-bottom:20px;
-}
-
-/* ===== GRID ===== */
+/* CARDS */
 .grid{
   display:grid;
-
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-  gap:18px;
+  gap:15px;
 }
 
 .card{
-  background:rgba(255,255,255,0.04);
-
-  border:1px solid rgba(255,255,255,0.06);
-
-  border-radius:22px;
-
-  padding:22px;
-
-  transition:0.3s;
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);
 }
 
-.card:hover{
-  transform:translateY(-6px);
-
-  border-color:rgba(255,0,0,0.2);
-
-  box-shadow:
-  0 0 24px rgba(255,0,0,0.12);
-}
-
-.card h3{
-  margin-bottom:10px;
-}
-
-.card p{
-  font-size:14px;
-
-  color:rgba(255,255,255,0.65);
-
-  line-height:1.7;
-}
-
-/* ===== TIMELINE ===== */
-.timeline{
-  border-left:2px solid rgba(255,0,0,0.3);
-
-  padding-left:24px;
-}
-
+/* TIMELINE */
 .timeline-item{
-  margin-bottom:24px;
-
-  position:relative;
+  background:#111;
+  padding:15px;
+  margin:10px 0;
+  border-left:4px solid red;
+  border-radius:10px;
 }
 
-.timeline-item::before{
-  content:'';
-
-  position:absolute;
-
-  left:-31px;
-  top:5px;
-
-  width:12px;
-  height:12px;
-
-  border-radius:50%;
-
-  background:#ff2a2a;
-
-  box-shadow:
-  0 0 14px rgba(255,0,0,0.5);
-}
-
-/* ===== MOBILE ===== */
+/* MOBILE */
 @media(max-width:768px){
-
-  .wrapper{
-    padding:90px 14px 60px;
-  }
-
-  .hero{
-    padding:25px;
-  }
-
-  .hero h1{
-    font-size:42px;
-    line-height:1.1;
-  }
-
-  .intro-logo{
-    font-size:70px;
-  }
-
-  .intro-text{
-    font-size:11px;
-    letter-spacing:3px;
-    text-align:center;
-  }
-
-  .login-box{
-    flex-direction:column;
-  }
-
-  .login-box input,
-  button{
-    width:100%;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .section{
-    padding:18px;
-  }
-
-  .section-title{
-    font-size:20px;
-  }
-
-}
-
-/* ===== HIDDEN ===== */
-.hidden{
-  display:none;
+  .hero h1{font-size:40px;}
+  .intro-logo{font-size:70px;}
 }
 
 </style>
@@ -468,148 +163,48 @@ button:hover{
 <body>
 
 <!-- INTRO -->
-
 <div class="intro-screen">
-
-  <div class="intro-logo">
-    GK
-  </div>
-
-  <div class="intro-text">
-    GoalkeeperKickoff Exclusive
-  </div>
-
+  <div class="intro-logo">GK</div>
+  <div class="intro-text">GoalkeeperKickoff Exclusive</div>
 </div>
-
-<!-- PARTICLES -->
-
-<div class="particles">
-
-  <div class="particle" style="left:10%; animation-duration:9s;"></div>
-  <div class="particle" style="left:25%; animation-duration:13s;"></div>
-  <div class="particle" style="left:40%; animation-duration:11s;"></div>
-  <div class="particle" style="left:55%; animation-duration:14s;"></div>
-  <div class="particle" style="left:70%; animation-duration:8s;"></div>
-  <div class="particle" style="left:85%; animation-duration:12s;"></div>
-
-</div>
-
-<!-- MAIN -->
 
 <div class="wrapper">
 
   <div class="hero">
-
-    <div class="badge">
-      👑 GK PREMIUM ACCESS
-    </div>
-
-    <h1>
-      GK <span class="highlight">EXCLUSIVE</span>
-    </h1>
-
-    <p>
-      Willkommen im exklusiven Bereich von GoalkeeperKickoff.
-      Hier findest du Creator-News, Podcasts,
-      Matchday-Projekte und exklusive Inhalte.
-    </p>
-
-    <!-- LOGIN -->
+    <h1>GK <span class="highlight">EXCLUSIVE</span></h1>
+    <p>Willkommen im GK Premium Bereich mit Podcasts, Projekten und exklusiven Inhalten.</p>
 
     <div id="loginArea">
+      <input type="password" id="password" placeholder="Premium Code">
+      <button onclick="login()">VIP Login</button>
+    </div>
+  </div>
 
-      <div class="login-box">
+  <!-- VIP CONTENT -->
+  <div id="vipContent" style="display:none;">
 
-        <input type="password" id="password" placeholder="Premium Code eingeben...">
+    <!-- PODCAST -->
+    <div class="section">
+      <h2>🎙 Podcasts</h2>
 
-        <button onclick="login()">
-          PREMIUM ÖFFNEN
-        </button>
-
+      <div class="grid">
+        <div class="card">GK Podcast</div>
+        <div class="card">RedZone FM</div>
+        <div class="card">Lappen & Wischmopp</div>
       </div>
-
     </div>
 
-    <!-- VIP CONTENT -->
+    <!-- TIMELINE -->
+    <div class="section">
+      <h2>📅 Timeline</h2>
 
-    <div id="vipContent">
+      <div id="timeline"></div>
 
-      <!-- PODCAST HUB -->
-
-      <div class="section">
-
-        <div class="section-title">
-          🎙 PODCAST HUB
-        </div>
-
-        <div class="grid">
-
-          <div class="card">
-            <h3>GoalkeeperKickoff</h3>
-
-            <p>
-              Matchday Talks, Creator-News und exklusive Storys.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>RedZone FM</h3>
-
-            <p>
-              Fußballanalysen, Community-Themen und Spezialfolgen.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Lappen & Wischmopp</h3>
-
-            <p>
-              Chaos-Talks, Fun-Episoden und geheime Specials.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- TIMELINE -->
-
-      <div class="section">
-
-        <div class="section-title">
-          📅 UPCOMING DROPS
-        </div>
-
-        <div class="timeline" id="timeline">
-
-        </div>
-
-      </div>
-
-      <!-- INTERACTIVE -->
-
-      <div class="section">
-
-        <div class="section-title">
-          🎮 INTERACTIVE AREA
-        </div>
-
-        <div class="login-box">
-
-          <button>
-            🎧 RANDOM PODCAST
-          </button>
-
-          <button>
-            ⚽ MATCHDAY MODE
-          </button>
-
-          <button>
-            🔥 SECRET DROP
-          </button>
-
-        </div>
-
+      <!-- ADMIN PANEL (NUR UNTEN!) -->
+      <div style="margin-top:15px;">
+        <button onclick="adminLogin()">👑 Admin</button>
+        <button onclick="addItem()">➕ Add</button>
+        <button onclick="exportJSON()">💾 Export</button>
       </div>
 
     </div>
@@ -620,63 +215,96 @@ button:hover{
 
 <script>
 
-const correctPassword = "GK2026";
+const VIP = "GK2026";
+const ADMIN = "GKADMIN2026";
+
+let isAdmin = false;
+let data = [];
 
 /* VIP LOGIN */
-
 function login(){
-
-  const password =
-  document.getElementById("password").value;
-
-  if(password === correctPassword){
-
+  if(document.getElementById("password").value === VIP){
     document.getElementById("vipContent").style.display = "block";
-
     document.getElementById("loginArea").style.display = "none";
+    load();
+  } else alert("Falsch");
+}
 
-  } else {
+/* LOAD */
+async function load(){
+  const res = await fetch("https://raw.githubusercontent.com/GK-BSG/gk-premium/main/timeline.json");
+  data = await res.json();
+  render();
+}
 
-    alert("Falscher Premium Code.");
+/* RENDER */
+function render(){
+
+  const box = document.getElementById("timeline");
+  box.innerHTML = "";
+
+  data.forEach((item,i)=>{
+
+    const div = document.createElement("div");
+    div.className = "timeline-item";
+
+    div.innerHTML = `
+      <h3 contenteditable="${isAdmin}">${item.title}</h3>
+      <p contenteditable="${isAdmin}">${item.text}</p>
+      ${isAdmin ? `<button onclick="del(${i})">❌</button>` : ""}
+    `;
+
+    box.appendChild(div);
+
+  });
+
+  if(isAdmin){
+
+    document.querySelectorAll("h3").forEach((el,i)=>{
+      el.oninput = () => data[i].title = el.innerText;
+    });
+
+    document.querySelectorAll("p").forEach((el,i)=>{
+      el.oninput = () => data[i].text = el.innerText;
+    });
 
   }
 
 }
 
-/* ONLINE TIMELINE */
-
-async function loadTimeline(){
-
-  const res = await fetch(
-    "https://raw.githubusercontent.com/GK-BSG/gk-premium/main/timeline.json"
-  );
-
-  const data = await res.json();
-
-  const timeline =
-  document.getElementById("timeline");
-
-  timeline.innerHTML = "";
-
-  data.forEach(item=>{
-
-    const div =
-    document.createElement("div");
-
-    div.className = "timeline-item";
-
-    div.innerHTML = `
-      <h3>${item.title}</h3>
-      <p>${item.text}</p>
-    `;
-
-    timeline.appendChild(div);
-
-  });
-
+/* ADMIN */
+function adminLogin(){
+  const pw = prompt("Admin Passwort:");
+  if(pw === ADMIN){
+    isAdmin = true;
+    alert("Admin aktiv 🔥");
+    render();
+  }
 }
 
-loadTimeline();
+/* ADD */
+function addItem(){
+  if(!isAdmin) return;
+  data.push({title:"Neu",text:"Beschreibung"});
+  render();
+}
+
+/* DELETE */
+function del(i){
+  data.splice(i,1);
+  render();
+}
+
+/* EXPORT */
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "timeline.json";
+  a.click();
+}
+
+/* START NOTHING */
 
 </script>
 
