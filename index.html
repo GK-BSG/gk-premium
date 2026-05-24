@@ -4,27 +4,462 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GK Premium</title>
+<title>GoalkeeperKickoff Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
+/* ===== RESET ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
-  background:#050505;
+  font-family:'Inter',sans-serif;
+
+  background:
+  radial-gradient(circle at top left, rgba(255,0,0,0.18), transparent 35%),
+  radial-gradient(circle at bottom right, rgba(120,0,0,0.22), transparent 40%),
+  #050505;
+
   color:white;
-  font-family:Arial;
+  overflow-x:hidden;
+}
+
+/* ===== INTRO ===== */
+.intro-screen{
+  position:fixed;
+  inset:0;
+
+  background:#050505;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  z-index:99999;
+
+  animation:introFade 3.5s forwards;
+}
+
+.intro-logo{
+  font-family:'Orbitron',sans-serif;
+
+  font-size:120px;
+  font-weight:900;
+
+  color:#ff2b2b;
+
+  text-shadow:
+  0 0 25px rgba(255,0,0,0.45);
+
+  animation:logoPulse 2s infinite alternate;
+}
+
+.intro-text{
+  margin-top:18px;
+
+  color:rgba(255,255,255,0.65);
+
+  letter-spacing:5px;
+
+  text-transform:uppercase;
+
+  font-size:13px;
+}
+
+@keyframes logoPulse{
+
+  from{
+    transform:scale(0.92);
+    opacity:0.75;
+  }
+
+  to{
+    transform:scale(1.05);
+    opacity:1;
+  }
+
+}
+
+@keyframes introFade{
+
+  0%{
+    opacity:1;
+    visibility:visible;
+  }
+
+  80%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+    visibility:hidden;
+  }
+
+}
+
+/* ===== PARTICLES ===== */
+.particles{
+  position:fixed;
+  inset:0;
+
+  overflow:hidden;
+
+  pointer-events:none;
+}
+
+.particle{
+  position:absolute;
+
+  width:4px;
+  height:4px;
+
+  background:#ff2a2a;
+
+  border-radius:50%;
+
+  animation:float linear infinite;
+}
+
+@keyframes float{
+
+  from{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+
+  20%{
+    opacity:1;
+  }
+
+  to{
+    transform:translateY(-100px);
+    opacity:0;
+  }
+
+}
+
+/* ===== WRAPPER ===== */
+.wrapper{
+  width:100%;
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:120px 20px 80px;
+}
+
+/* ===== HERO ===== */
+.hero{
+  background:rgba(10,10,10,0.78);
+
+  border:1px solid rgba(255,0,0,0.12);
+
+  box-shadow:
+  0 0 40px rgba(255,0,0,0.12);
+
+  border-radius:32px;
+
   padding:40px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  backdrop-filter:blur(18px);
+}
+
+.hero::before{
+  content:'';
+
+  position:absolute;
+  inset:0;
+
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.03),
+    transparent
+  );
+
+  animation:shine 6s linear infinite;
+}
+
+@keyframes shine{
+
+  from{
+    transform:translateX(-100%);
+  }
+
+  to{
+    transform:translateX(100%);
+  }
+
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:10px 16px;
+
+  border-radius:999px;
+
+  background:rgba(255,0,0,0.12);
+
+  border:1px solid rgba(255,0,0,0.18);
+
+  margin-bottom:24px;
+
+  font-size:13px;
+}
+
+.hero h1{
+  font-family:'Orbitron',sans-serif;
+
+  font-size:72px;
+
+  line-height:1;
+
+  margin-bottom:20px;
+}
+
+.highlight{
+  color:#ff3939;
+
+  text-shadow:
+  0 0 20px rgba(255,0,0,0.45);
+}
+
+.hero p{
+  max-width:760px;
+
+  line-height:1.8;
+
+  color:rgba(255,255,255,0.7);
+
+  margin-bottom:30px;
+}
+
+/* ===== LOGIN ===== */
+.login-box{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.login-box input{
+  flex:1;
+
+  min-width:220px;
+
+  background:rgba(255,255,255,0.05);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  border-radius:18px;
+
+  padding:16px 18px;
+
+  color:white;
+
+  outline:none;
+}
+
+button{
+  border:none;
+
+  border-radius:18px;
+
+  padding:16px 22px;
+
+  cursor:pointer;
+
+  font-weight:700;
+
+  background:linear-gradient(
+    135deg,
+    #ff2020,
+    #700000
+  );
+
+  color:white;
+
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 0 22px rgba(255,0,0,0.25);
+}
+
+/* ===== VIP ===== */
+#vipContent{
+  display:none;
+
+  margin-top:40px;
+}
+
+/* ===== SECTIONS ===== */
+.section{
+  margin-bottom:28px;
+
+  background:rgba(255,255,255,0.04);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  border-radius:28px;
+
+  padding:28px;
+}
+
+.section-title{
+  font-family:'Orbitron',sans-serif;
+
+  font-size:24px;
+
+  margin-bottom:20px;
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+  gap:18px;
+}
+
+.card{
+  background:rgba(255,255,255,0.04);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  border-radius:22px;
+
+  padding:22px;
+
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+
+  border-color:rgba(255,0,0,0.2);
+
+  box-shadow:
+  0 0 24px rgba(255,0,0,0.12);
+}
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.card p{
+  font-size:14px;
+
+  color:rgba(255,255,255,0.65);
+
+  line-height:1.7;
+}
+
+/* ===== TIMELINE ===== */
+.timeline{
+  border-left:2px solid rgba(255,0,0,0.3);
+
+  padding-left:24px;
 }
 
 .timeline-item{
-  background:#111;
-  padding:20px;
-  margin-bottom:20px;
-  border-radius:20px;
-  border-left:4px solid red;
+  margin-bottom:24px;
+
+  position:relative;
 }
 
-h1{
-  color:red;
+.timeline-item::before{
+  content:'';
+
+  position:absolute;
+
+  left:-31px;
+  top:5px;
+
+  width:12px;
+  height:12px;
+
+  border-radius:50%;
+
+  background:#ff2a2a;
+
+  box-shadow:
+  0 0 14px rgba(255,0,0,0.5);
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+
+  .wrapper{
+    padding:90px 14px 60px;
+  }
+
+  .hero{
+    padding:25px;
+  }
+
+  .hero h1{
+    font-size:42px;
+    line-height:1.1;
+  }
+
+  .intro-logo{
+    font-size:70px;
+  }
+
+  .intro-text{
+    font-size:11px;
+    letter-spacing:3px;
+    text-align:center;
+  }
+
+  .login-box{
+    flex-direction:column;
+  }
+
+  .login-box input,
+  button{
+    width:100%;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .section{
+    padding:18px;
+  }
+
+  .section-title{
+    font-size:20px;
+  }
+
+}
+
+/* ===== HIDDEN ===== */
+.hidden{
+  display:none;
 }
 
 </style>
@@ -32,11 +467,183 @@ h1{
 
 <body>
 
-<h1>GK PREMIUM</h1>
+<!-- INTRO -->
 
-<div id="timeline"></div>
+<div class="intro-screen">
+
+  <div class="intro-logo">
+    GK
+  </div>
+
+  <div class="intro-text">
+    GoalkeeperKickoff Exclusive
+  </div>
+
+</div>
+
+<!-- PARTICLES -->
+
+<div class="particles">
+
+  <div class="particle" style="left:10%; animation-duration:9s;"></div>
+  <div class="particle" style="left:25%; animation-duration:13s;"></div>
+  <div class="particle" style="left:40%; animation-duration:11s;"></div>
+  <div class="particle" style="left:55%; animation-duration:14s;"></div>
+  <div class="particle" style="left:70%; animation-duration:8s;"></div>
+  <div class="particle" style="left:85%; animation-duration:12s;"></div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="wrapper">
+
+  <div class="hero">
+
+    <div class="badge">
+      👑 GK PREMIUM ACCESS
+    </div>
+
+    <h1>
+      GK <span class="highlight">EXCLUSIVE</span>
+    </h1>
+
+    <p>
+      Willkommen im exklusiven Bereich von GoalkeeperKickoff.
+      Hier findest du Creator-News, Podcasts,
+      Matchday-Projekte und exklusive Inhalte.
+    </p>
+
+    <!-- LOGIN -->
+
+    <div id="loginArea">
+
+      <div class="login-box">
+
+        <input type="password" id="password" placeholder="Premium Code eingeben...">
+
+        <button onclick="login()">
+          PREMIUM ÖFFNEN
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- VIP CONTENT -->
+
+    <div id="vipContent">
+
+      <!-- PODCAST HUB -->
+
+      <div class="section">
+
+        <div class="section-title">
+          🎙 PODCAST HUB
+        </div>
+
+        <div class="grid">
+
+          <div class="card">
+            <h3>GoalkeeperKickoff</h3>
+
+            <p>
+              Matchday Talks, Creator-News und exklusive Storys.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>RedZone FM</h3>
+
+            <p>
+              Fußballanalysen, Community-Themen und Spezialfolgen.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Lappen & Wischmopp</h3>
+
+            <p>
+              Chaos-Talks, Fun-Episoden und geheime Specials.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- TIMELINE -->
+
+      <div class="section">
+
+        <div class="section-title">
+          📅 UPCOMING DROPS
+        </div>
+
+        <div class="timeline" id="timeline">
+
+        </div>
+
+      </div>
+
+      <!-- INTERACTIVE -->
+
+      <div class="section">
+
+        <div class="section-title">
+          🎮 INTERACTIVE AREA
+        </div>
+
+        <div class="login-box">
+
+          <button>
+            🎧 RANDOM PODCAST
+          </button>
+
+          <button>
+            ⚽ MATCHDAY MODE
+          </button>
+
+          <button>
+            🔥 SECRET DROP
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
+
+const correctPassword = "GK2026";
+
+/* VIP LOGIN */
+
+function login(){
+
+  const password =
+  document.getElementById("password").value;
+
+  if(password === correctPassword){
+
+    document.getElementById("vipContent").style.display = "block";
+
+    document.getElementById("loginArea").style.display = "none";
+
+  } else {
+
+    alert("Falscher Premium Code.");
+
+  }
+
+}
+
+/* ONLINE TIMELINE */
 
 async function loadTimeline(){
 
@@ -59,7 +666,7 @@ async function loadTimeline(){
     div.className = "timeline-item";
 
     div.innerHTML = `
-      <h2>${item.title}</h2>
+      <h3>${item.title}</h3>
       <p>${item.text}</p>
     `;
 
