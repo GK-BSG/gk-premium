@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GK Premium</title>
+
+<style>
+
+body{
+  background:#050505;
+  color:white;
+  font-family:Arial;
+  padding:40px;
+}
+
+.timeline-item{
+  background:#111;
+  padding:20px;
+  margin-bottom:20px;
+  border-radius:20px;
+  border-left:4px solid red;
+}
+
+h1{
+  color:red;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>GK PREMIUM</h1>
+
+<div id="timeline"></div>
+
+<script>
+
+async function loadTimeline(){
+
+  const res = await fetch(
+    "https://raw.githubusercontent.com/GK-BSG/gk-premium/main/timeline.json"
+  );
+
+  const data = await res.json();
+
+  const timeline =
+  document.getElementById("timeline");
+
+  timeline.innerHTML = "";
+
+  data.forEach(item=>{
+
+    const div =
+    document.createElement("div");
+
+    div.className = "timeline-item";
+
+    div.innerHTML = `
+      <h2>${item.title}</h2>
+      <p>${item.text}</p>
+    `;
+
+    timeline.appendChild(div);
+
+  });
+
+}
+
+loadTimeline();
+
+</script>
+
+</body>
+</html>
