@@ -4,18 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GK Premium</title>
+<title>GK Premium Timeline</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ================= BASE ================= */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+/* ========== BASE ========== */
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   font-family:'Inter',sans-serif;
@@ -23,7 +21,7 @@ body{
   color:white;
 }
 
-/* ================= INTRO ================= */
+/* ========== INTRO ========== */
 .intro{
   position:fixed;
   inset:0;
@@ -35,6 +33,7 @@ body{
   font-size:80px;
   color:red;
   animation:fadeOut 2.5s forwards;
+  z-index:999;
 }
 
 @keyframes fadeOut{
@@ -42,14 +41,14 @@ body{
   100%{opacity:0;visibility:hidden;}
 }
 
-/* ================= WRAPPER ================= */
+/* ========== WRAPPER ========== */
 .wrapper{
   max-width:1100px;
   margin:auto;
   padding:100px 20px;
 }
 
-/* ================= HERO ================= */
+/* ========== HERO ========== */
 .hero{
   background:rgba(255,255,255,0.04);
   padding:30px;
@@ -64,7 +63,18 @@ body{
 
 .highlight{color:#ff2b2b;}
 
-/* ================= BUTTON ================= */
+/* ========== INPUTS ========== */
+input{
+  padding:10px;
+  margin:5px 0;
+  background:#111;
+  border:1px solid #333;
+  color:white;
+  border-radius:10px;
+  width:100%;
+}
+
+/* ========== BUTTON ========== */
 button{
   background:linear-gradient(135deg,#ff2020,#700000);
   border:none;
@@ -75,7 +85,7 @@ button{
   margin-top:10px;
 }
 
-/* ================= CARDS ================= */
+/* ========== CARDS ========== */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -88,54 +98,32 @@ button{
   padding:22px;
   border-radius:20px;
   transition:0.3s;
-  position:relative;
-  overflow:hidden;
-}
-
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at top left, rgba(255,0,0,0.2), transparent 60%);
-  opacity:0;
-  transition:0.4s;
 }
 
 .card:hover{
-  transform:translateY(-8px) scale(1.02);
+  transform:translateY(-8px);
   border-color:rgba(255,50,50,0.3);
 }
 
-.card:hover::before{
-  opacity:1;
-}
-
-/* ================= TIMELINE ================= */
+/* ========== TIMELINE ========== */
 .timeline{
-  position:relative;
   margin-top:20px;
   padding-left:30px;
   border-left:3px solid rgba(255,0,0,0.4);
 }
 
-.timeline-item{
-  position:relative;
-  background:rgba(255,255,255,0.04);
-  padding:16px;
-  margin:15px 0;
+.item{
+  background:rgba(255,255,255,0.05);
+  margin:12px 0;
+  padding:15px;
   border-radius:14px;
-  transition:0.3s;
+  position:relative;
 }
 
-.timeline-item:hover{
-  transform:translateX(6px);
-}
-
-/* Punkt */
-.timeline-item::before{
+.item::before{
   content:"";
   position:absolute;
-  left:-40px;
+  left:-38px;
   top:18px;
   width:14px;
   height:14px;
@@ -144,19 +132,18 @@ button{
   box-shadow:0 0 10px red;
 }
 
-/* ================= DELETE BUTTON ================= */
-.delete-btn{
-  margin-top:10px;
-  background:rgba(255,0,0,0.3);
-}
-
-/* ================= ADMIN ================= */
-.admin-panel{
-  margin-top:20px;
+/* ========== ADMIN ========== */
+.admin-box{
+  margin-top:15px;
   padding:15px;
   background:rgba(255,0,0,0.08);
   border-radius:15px;
   display:none;
+}
+
+.delete{
+  margin-top:10px;
+  background:rgba(255,0,0,0.3);
 }
 
 </style>
@@ -175,8 +162,14 @@ button{
     <input type="password" id="pw" placeholder="Admin Code">
     <button onclick="login()">Login</button>
 
-    <div id="adminPanel" class="admin-panel">
-      👑 Admin aktiv
+    <div id="adminBox" class="admin-box">
+      👑 Admin aktiviert
+
+      <input id="title" placeholder="Titel">
+      <input id="text" placeholder="Text">
+      <input id="date" type="date">
+
+      <button onclick="addEvent()">+ Event hinzufügen</button>
     </div>
   </div>
 
@@ -190,86 +183,98 @@ button{
   <!-- TIMELINE -->
   <div class="hero" style="margin-top:20px;">
     <h2>📅 Timeline</h2>
-
     <div class="timeline" id="timeline"></div>
-
-    <button onclick="addEvent()">+ Event</button>
   </div>
 
 </div>
 
 <script>
 
+/* ========== SUPABASE ========== */
+const supabaseUrl = "https://ckaonmswhtejbrofecje.supabase.co";
+const supabaseKey = "DEIN_SERVICE_ROLE_KEY_HIER"; // besser später in Backend verstecken
+
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+/* ========== STATE ========== */
 let admin = false;
 
-let data = [
-  {title:"GK Matchday", text:"Behind the scenes", date:"2026-05-24"},
-  {title:"RedZone FM", text:"Neue Folge", date:"2026-05-20"},
-  {title:"VIP Drop", text:"Secret Content", date:"2026-05-18"}
-];
-
-/* INTRO */
+/* ========== INTRO ========== */
 setTimeout(()=>{
   document.querySelector(".intro").style.display="none";
 },2500);
 
-/* LOGIN */
+/* ========== LOGIN ========== */
 function login(){
   if(document.getElementById("pw").value === "GKADMIN"){
     admin = true;
-    document.getElementById("adminPanel").style.display="block";
-    render();
+    document.getElementById("adminBox").style.display="block";
   }
+  load();
 }
 
-/* SORT */
-function sortData(){
-  return data.sort((a,b)=> new Date(b.date)-new Date(a.date));
+/* ========== LOAD ========== */
+async function load(){
+  const { data } = await supabase
+    .from("timeline")
+    .select("*")
+    .order("date", { ascending: false });
+
+  render(data);
 }
 
-/* RENDER */
-function render(){
+/* ========== ADD ========== */
+async function addEvent(){
+  if(!admin) return;
+
+  await supabase.from("timeline").insert([{
+    title: document.getElementById("title").value,
+    text: document.getElementById("text").value,
+    date: document.getElementById("date").value
+  }]);
+
+  load();
+}
+
+/* ========== DELETE ========== */
+async function del(id){
+  if(!admin) return;
+
+  await supabase.from("timeline").delete().eq("id", id);
+  load();
+}
+
+/* ========== REALTIME ========== */
+supabase
+  .channel("timeline-channel")
+  .on("postgres_changes",
+    { event: "*", schema: "public", table: "timeline" },
+    () => load()
+  )
+  .subscribe();
+
+/* ========== RENDER ========== */
+function render(data){
   const box = document.getElementById("timeline");
   box.innerHTML = "";
 
-  sortData().forEach((item,index)=>{
-
+  data.forEach(item=>{
     const div = document.createElement("div");
-    div.className = "timeline-item";
+    div.className = "item";
 
     div.innerHTML = `
-      <small style="opacity:0.6;">📅 ${item.date}</small>
-      <h3>${item.title}</h3>
-      <p>${item.text}</p>
-
-      ${admin ? `<button class="delete-btn" onclick="del(${index})">🗑 Löschen</button>` : ""}
+      <b>${item.title}</b><br>
+      ${item.text}<br>
+      📅 ${item.date}
+      ${admin ? `<br><button class="delete" onclick="del('${item.id}')">Delete</button>` : ""}
     `;
 
     box.appendChild(div);
-
   });
 }
 
-/* ADD */
-function addEvent(){
-  if(!admin) return alert("Nur Admin!");
-
-  const title = prompt("Titel?");
-  const text = prompt("Text?");
-  const date = prompt("Datum (YYYY-MM-DD)?");
-
-  data.push({title,text,date});
-  render();
-}
-
-/* DELETE */
-function del(i){
-  data.splice(i,1);
-  render();
-}
-
 /* INIT */
-render();
+load();
 
 </script>
 
